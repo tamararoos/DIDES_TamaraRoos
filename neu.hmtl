@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Shirin David</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hintergrund-Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('Shirin.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .Shirin {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 25vw; /* relative Größe für Responsiveness */
+      color: #E0218A;
+      line-height: 0.8;
+      text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    #word {
+      font-size: 12vw;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.3s;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Mobile Optimierung */
+    @media (max-width: 768px) {
+      .Shirin {
+        font-size: 30vw;
+      }
+
+      #word {
+        font-size: 18vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .Shirin {
+        font-size: 35vw;
+      }
+
+      #word {
+        font-size: 20vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hintergrund-Text">
+    <div class="Shirin">SHIRIN DAVID</div>
+  </div>
+
+  <div id="word">BAUCH</div>
+
+  <!-- Audio-Elemente für jedes Wort -->
+  <audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
+  <audio id="Beine" src="Beine.mp3" preload="auto"></audio>
+  <audio id="Po" src="Po.mp3" preload="auto"></audio>
+
+  <script>
+    const words = ["BAUCH", "BEINE", "PO"];
+    const sounds = [
+      document.getElementById("Bauch"),
+      document.getElementById("Beine"),
+      document.getElementById("Po")
+    ];
+    let index = 0;
+
+    const wordElement = document.getElementById("word");
+
+    wordElement.addEventListener("click", () => {
+      index = (index + 1) % words.length;
+
+      wordElement.style.opacity = 0;
+      setTimeout(() => {
+        wordElement.textContent = words[index];
+        wordElement.style.opacity = 1;
+      }, 150);
+
+      sounds[index].currentTime = 0;
+      sounds[index].play();
+    });
+  </script>
+</body>
+</html>
