@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #e6007e;
+      font-weight: bold;
+      font-family: sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(2rem, 10vw, 8rem);
+      line-height: 1;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .letter {
+      display: inline-block;
+    }
+
+    /* Mobile Style */
+    @media (max-width: 400px) {
+      .wrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: auto;
+        font-size: clamp(1.5rem, 9vw, 4rem);
+      }
+
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <title>Shirin David Responsive</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="row">
+      <div class="letter">S</div>
+      <div class="letter">H</div>
+      <div class="letter">I</div>
+    </div>
+    <div class="row">
+      <div class="letter">R</div>
+      <div class="letter">I</div>
+      <div class="letter">N</div>
+    </div>
+    <div class="row">
+      <div class="letter">D</div>
+      <div class="letter">A</div>
+      <div class="letter">V</div>
+    </div>
+    <div class="row">
+      <div class="letter">I</div>
+      <div class="letter">D</div>
+    </div>
+  </div>
+</body>
+</html>

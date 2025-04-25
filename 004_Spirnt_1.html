@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <title>Shirin David</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+    
     html, body {
       height: 100%;
       margin: 0;
       background: #000000;
       color: #fff;
-      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-family: 'Anton', sans-serif; /* Geändert zu Anton */
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative; /* Wichtig für das Überlagern der Texte */
+      position: relative;
     }
 
     .hintergrund-Text {
@@ -25,29 +27,31 @@
       /*background-image: url('Shirin.jpg');*/
       background-size: cover;
       background-position: center;
-      z-index: 0; /* Hintergrundtext hinter allem anderen */
+      z-index: 0;
     }
     
     .Shirin {
-      position: absolute; /* Positioniere den pinken Text absolut */
-      top: 50%; /* Vertikal zentrieren */
-      left: 50%; /* Horizontal zentrieren */
-      transform: translate(-50%, -50%); /* Korrigiere den Offset für die Zentrierung */
-      font-size: 35vw;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 530px;
       color: #E0218A;
-      line-height: 50vh;
+      line-height: 430px;
       text-align: center;
       text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
-      z-index: 0; /* Pinken Text hinter den weißen Text */
+      z-index: 0;
+      letter-spacing: 1px; /* Leicht erhöhter Buchstabenabstand für Anton */
     }
 
     #word {
-      font-size: 20vw;
-      color: #fff; /* Weißer Text */
+      font-size: 20rem;
+      color: #fff;
       cursor: pointer;
       user-select: none;
       transition: opacity 0.3s;
-      z-index: 1; /* Weißer Text im Vordergrund */
+      z-index: 1;
+      letter-spacing: 1px; /* Konsistenter Buchstabenabstand */
     }
 
   </style>
@@ -67,9 +71,9 @@
 <script>
   const words = ["BAUCH", "BEINE", "PO"];
   const sounds = [
-    document.getElementById("Bauch"), // Sound für "Erstes"
-    document.getElementById("Beine"), // Sound für "Zweites"
-    document.getElementById("Po")  // Sound für "Drittes"
+    document.getElementById("Bauch"),
+    document.getElementById("Beine"),
+    document.getElementById("Po")
   ];
   let index = 0;
 
@@ -86,10 +90,9 @@
     }, 150);
 
     // Passenden Sound abspielen
-    sounds[index].currentTime = 0; // Startet den Sound von vorne
+    sounds[index].currentTime = 0;
     sounds[index].play();
   });
 </script>
-
 </body>
 </html>
