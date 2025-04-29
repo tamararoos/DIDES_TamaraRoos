@@ -14,6 +14,10 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      overflow: hidden;
+      overflow: hidden; /* Neu */
+  width: 100vw; /* Neu */
+  height: 100vh; /* Neu */
     }
 
     .hintergrund-Text {
@@ -23,6 +27,8 @@
       justify-content: center;
       align-items: center;
       z-index: 0;
+      width: 100vw; /* Neu */
+      min-width: 100vw; /* Neu */
     }
 
     .name-container {
@@ -35,6 +41,7 @@
       text-shadow: 2px 2px 4px rgb(255, 255, 255);
       text-transform: uppercase;
       line-height: 25vh;
+      width: 100%; /* Neu */
     }
 
     .row {
@@ -156,7 +163,7 @@
       position: relative;
       display: flex;
       align-items: flex-end;
-      justify-content: left;
+      justify-content: center;
       overflow: hidden;
     }
 
@@ -182,25 +189,21 @@
       align-items: center;
     }
 
-    .additional-words {
-      display: flex;
-      gap: 50px;
-      margin-top: 1px;
-      z-index: 1;
-    }
-    
-    .additional-word {
-      font-size: 5vw;
+    .floating-word {
+      position: absolute;
+      font-size: 8vw;
       color: #fff;
       cursor: pointer;
       text-shadow: 0 0 10px #E0218A, 
                    0 0 20px #E0218A;
-      transition: all 0.3s ease;
+      z-index: 1;
+      user-select: none;
+      transition: transform 0.3s ease;
+      pointer-events: auto;
     }
-    
-    .additional-word:active {
-      transform: scale(1.5);
-      opacity: 0.7;
+
+    .floating-word:active {
+      transform: scale(1.8) !important;
     }
   </style>
 </head>
@@ -231,16 +234,6 @@
 
 <div id="word">BAUCH</div>
 
-<!-- Neue permanente Wörter hinzufügen -->
-<div class="additional-words">
-  <div class="additional-word" id="uh">UH</div>
-  <div class="additional-word" id="yeah">YEAH</div>
-</div>
-
-<div class="action-wrapper">
-  <!-- [Rest Ihres bestehenden Codes] -->
-</div>
-
 <div class="action-wrapper">
   <div class="svg-container">
     <img id="svg1" src="Element 80.svg" class="visible" alt="SVG 1">
@@ -252,22 +245,19 @@
   </div>
 </div>
 
-<!-- Audio-Elemente -->
 <audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
 <audio id="Beine" src="Beine.mp3" preload="auto"></audio>
 <audio id="Po" src="Po.mp3" preload="auto"></audio>
-<audio id="Uh" src="Uh.mp3" preload="auto"></audio>
+<audio id="Body" src="Body.mp3" preload="auto"></audio>
 <audio id="Yeah" src="Yeah.mp3" preload="auto"></audio>
 <audio id="PushSound" src="pushit.mp3" preload="auto"></audio>
 
 <script>
-  const words = ["BAUCH", "BEINE", "PO", "UH", "YEAH"];
+  const words = ["BAUCH", "BEINE", "PO"];
   const sounds = [
     document.getElementById("Bauch"),
     document.getElementById("Beine"),
-    document.getElementById("Po"),
-    document.getElementById("Uh"),
-    document.getElementById("Yeah")
+    document.getElementById("Po")
   ];
   let index = 0;
 
@@ -276,19 +266,16 @@
   wordElement.addEventListener("click", () => {
     index = (index + 1) % words.length;
 
-    // Pop-Effekt
     wordElement.classList.remove("pop");
     void wordElement.offsetWidth;
     wordElement.classList.add("pop");
 
-    // Wortwechsel mit Fade
     wordElement.style.opacity = 0;
     setTimeout(() => {
       wordElement.textContent = words[index];
       wordElement.style.opacity = 1;
     }, 150);
 
-    // Sound abspielen
     sounds[index].currentTime = 0;
     sounds[index].play();
   });
@@ -308,12 +295,10 @@
     pushSound.currentTime = 0;
     pushSound.play();
 
-    // Pop-Effekt für Counter
     counterElement.classList.remove("counter-pop");
     void counterElement.offsetWidth;
     counterElement.classList.add("counter-pop");
 
-    // Pop-Effekt für PUSH IT
     pushIt.classList.remove("pop");
     void pushIt.offsetWidth;
     pushIt.classList.add("pop");
@@ -326,36 +311,52 @@
       svg2.classList.remove("visible");
       svg1.classList.add("visible");
     }
-    const uhElement = document.getElementById("uh");
-  const yeahElement = document.getElementById("yeah");
-  
-  uhElement.addEventListener("click", () => {
-    uhElement.style.transform = 'scale(1.5)';
-    uhElement.style.opacity = '0.7';
-    
-    setTimeout(() => {
-      uhElement.style.transform = 'scale(1)';
-      uhElement.style.opacity = '1';
-    }, 300);
-    
-    document.getElementById("Uh").currentTime = 0;
-    document.getElementById("Uh").play();
   });
-  
-  yeahElement.addEventListener("click", () => {
-    yeahElement.style.transform = 'scale(1.5)';
-    yeahElement.style.opacity = '0.7';
-    
-    setTimeout(() => {
-      yeahElement.style.transform = 'scale(1)';
-      yeahElement.style.opacity = '1';
-    }, 300);
-    
-    document.getElementById("Yeah").currentTime = 0;
-    document.getElementById("Yeah").play();
-  });
-  });
-</script>
 
+  // Floating Words Funktion
+  function createFloatingWord(text, soundId) {
+    const word = document.createElement('div');
+    word.className = 'floating-word';
+    word.textContent = text;
+    document.body.appendChild(word);
+
+    // Startposition
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    
+    // Zufällige Bewegung
+    let xSpeed = (Math.random() - 0.5) * 3;
+    let ySpeed = (Math.random() - 0.5) * 3;
+
+    // Klick-Effekt
+    word.addEventListener('click', () => {
+      document.getElementById(soundId).currentTime = 0;
+      document.getElementById(soundId).play();
+      word.style.transform = 'scale(1.8)';
+      setTimeout(() => word.style.transform = 'scale(1)', 300);
+    });
+
+    // Animation
+    function animate() {
+      x += xSpeed;
+      y += ySpeed;
+
+      // Bildschirmbegrenzungen
+      if (x <= 0 || x >= window.innerWidth - word.offsetWidth) xSpeed *= -1;
+      if (y <= 0 || y >= window.innerHeight - word.offsetHeight) ySpeed *= -1;
+
+      word.style.left = x + 'px';
+      word.style.top = y + 'px';
+      
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+
+  // Wörter erstellen
+  createFloatingWord('BODY', 'Body');
+  createFloatingWord('YEAH', 'Yeah');
+</script>
 </body>
 </html>

@@ -14,10 +14,6 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      overflow: hidden;
-      overflow: hidden; /* Neu */
-  width: 100vw; /* Neu */
-  height: 100vh; /* Neu */
     }
 
     .hintergrund-Text {
@@ -27,8 +23,6 @@
       justify-content: center;
       align-items: center;
       z-index: 0;
-      width: 100vw; /* Neu */
-      min-width: 100vw; /* Neu */
     }
 
     .name-container {
@@ -41,7 +35,6 @@
       text-shadow: 2px 2px 4px rgb(255, 255, 255);
       text-transform: uppercase;
       line-height: 25vh;
-      width: 100%; /* Neu */
     }
 
     .row {
@@ -83,24 +76,28 @@
 
     @keyframes pop {
       0% { transform: scale(1); }
-      50% { transform: scale(3); }
+      50% { transform: scale(3); }  /* Größere Skalierung */
       100% { transform: scale(1); }
     }
 
     .pop {
-      animation: pop 0.5s ease;
+      animation: pop 0.5s ease;  /* Längere Animationsdauer */
     }
 
     @keyframes wordPulseGlow {
       0% {
+
         text-shadow: 0 0 5px #E0218A, 0 0 10px #ff6ec7, 0 0 20px #E0218A;
       }
       50% {
+
         text-shadow: 0 0 20px #f9a1d7, 0 0 30px #f9a1d7, 0 0 40px #f9a1d7;
       }
       100% {
+
         text-shadow: 0 0 5px #E0218A, 0 0 10px #ff6ec7, 0 0 20px #E0218A;
       }
+
     }
 
     #pushIt {
@@ -168,42 +165,25 @@
     }
 
     .svg-container img {
-      position: absolute;
-      max-height: 100%;
-      max-width: unset;
-      bottom: 0;
-      opacity: 0;
-      transition: opacity 0.5s ease, filter 0.3s ease;
-      filter: drop-shadow(0 0 10px rgb(255, 255, 255));
-    }
+  position: absolute;
+  max-height: 100%;
+  max-width: unset;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 10px rgb(255, 255, 255));
+}
 
-    .svg-container img.visible {
-      opacity: 1;
-      filter: drop-shadow(0 0 10px rgb(254, 254, 254)) 
-              drop-shadow(0 0 10px rgba(255, 255, 255, 0.231));
-    }
+.svg-container img.visible {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgb(254, 254, 254)) 
+          drop-shadow(0 0 10px rgba(255, 255, 255, 0.231));
+}
 
     .text-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .floating-word {
-      position: absolute;
-      font-size: 8vw;
-      color: #fff;
-      cursor: pointer;
-      text-shadow: 0 0 10px #E0218A, 
-                   0 0 20px #E0218A;
-      z-index: 1;
-      user-select: none;
-      transition: transform 0.3s ease;
-      pointer-events: auto;
-    }
-
-    .floating-word:active {
-      transform: scale(1.8) !important;
     }
   </style>
 </head>
@@ -248,8 +228,6 @@
 <audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
 <audio id="Beine" src="Beine.mp3" preload="auto"></audio>
 <audio id="Po" src="Po.mp3" preload="auto"></audio>
-<audio id="Body" src="Body.mp3" preload="auto"></audio>
-<audio id="Yeah" src="Yeah.mp3" preload="auto"></audio>
 <audio id="PushSound" src="pushit.mp3" preload="auto"></audio>
 
 <script>
@@ -295,10 +273,12 @@
     pushSound.currentTime = 0;
     pushSound.play();
 
+    // Pop-Effekt für Counter
     counterElement.classList.remove("counter-pop");
     void counterElement.offsetWidth;
     counterElement.classList.add("counter-pop");
 
+    // Pop-Effekt für PUSH IT
     pushIt.classList.remove("pop");
     void pushIt.offsetWidth;
     pushIt.classList.add("pop");
@@ -312,51 +292,7 @@
       svg1.classList.add("visible");
     }
   });
-
-  // Floating Words Funktion
-  function createFloatingWord(text, soundId) {
-    const word = document.createElement('div');
-    word.className = 'floating-word';
-    word.textContent = text;
-    document.body.appendChild(word);
-
-    // Startposition
-    let x = Math.random() * window.innerWidth;
-    let y = Math.random() * window.innerHeight;
-    
-    // Zufällige Bewegung
-    let xSpeed = (Math.random() - 0.5) * 3;
-    let ySpeed = (Math.random() - 0.5) * 3;
-
-    // Klick-Effekt
-    word.addEventListener('click', () => {
-      document.getElementById(soundId).currentTime = 0;
-      document.getElementById(soundId).play();
-      word.style.transform = 'scale(1.8)';
-      setTimeout(() => word.style.transform = 'scale(1)', 300);
-    });
-
-    // Animation
-    function animate() {
-      x += xSpeed;
-      y += ySpeed;
-
-      // Bildschirmbegrenzungen
-      if (x <= 0 || x >= window.innerWidth - word.offsetWidth) xSpeed *= -1;
-      if (y <= 0 || y >= window.innerHeight - word.offsetHeight) ySpeed *= -1;
-
-      word.style.left = x + 'px';
-      word.style.top = y + 'px';
-      
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  }
-
-  // Wörter erstellen
-  createFloatingWord('BODY', 'Body');
-  createFloatingWord('YEAH', 'Yeah');
 </script>
+
 </body>
 </html>
