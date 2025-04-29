@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Shirin David</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .hintergrund-Text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 0;
+    }
+
+    .name-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 52vw;
+      color: #E0218A;
+      text-shadow: 2px 2px 4px rgb(255, 255, 255);
+      text-transform: uppercase;
+      line-height: 25vh;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .row-1 span,
+    .row-2 span {
+      font-size: 35vw;
+      line-height: 50vh;
+    }
+
+    .row-1, .row-2 { display: flex; }
+    .row-3, .row-4 { display: none; }
+
+    @media (max-width: 800px) {
+      .row-1, .row-2 { display: none;}
+      .row-3, .row-4 { display: flex; }
+    }
+
+    #word {
+      font-size: 20vw;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1;
+      position: relative;
+      animation: wordPulseGlow 2s infinite;
+      transform: scale(1);
+      opacity: 1;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    #word:active {
+      transform: scale(3);
+      opacity: 0.2;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(3); }
+      100% { transform: scale(1); }
+    }
+
+    .pop {
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes wordPulseGlow {
+      0% {
+        text-shadow: 0 0 5px #E0218A, 0 0 10px #ff6ec7, 0 0 20px #E0218A;
+      }
+      50% {
+        text-shadow: 0 0 20px #f9a1d7, 0 0 30px #f9a1d7, 0 0 40px #f9a1d7;
+      }
+      100% {
+        text-shadow: 0 0 5px #E0218A, 0 0 10px #ff6ec7, 0 0 20px #E0218A;
+      }
+    }
+
+    #pushIt {
+      font-size: 10vw;
+      color: #E0218A;
+      cursor: pointer;
+      user-select: none;
+      animation: pushItPulseGlow 2s infinite;
+      z-index: 1;
+      position: relative;
+    }
+
+    @keyframes pushItPulseGlow {
+      0% {
+        text-shadow: 0 0 5px #ffffff, 0 0 10px #ffbef2, 0 0 20px #ffffff;
+      }
+      50% {
+        text-shadow: 0 0 15px #ffffff, 0 0 30px #ffbef2, 0 0 45px #ffffff;
+      }
+      100% {
+        text-shadow: 0 0 5px #ffffff, 0 0 10px #ffbef2, 0 0 20px #ffffff;
+      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    #counter {
+      margin-top: 10px;
+      font-size: 10vw;
+      color: rgb(255, 255, 255);
+      z-index: 2;
+      text-shadow: 0 0 5px #000000, 0 0 10px #E0218A, 0 0 20px #000000;
+      transform: scale(1);
+      transition: transform 0.3s ease;
+    }
+
+    .counter-pop {
+      animation: counterPop 0.5s ease;
+    }
+
+    @keyframes counterPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    .action-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 30px;
+      margin-top: 40px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .svg-container {
+      height: 25vw;
+      width: 25vw;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: left;
+      overflow: hidden;
+    }
+
+    .svg-container img {
+      position: absolute;
+      max-height: 100%;
+      max-width: unset;
+      bottom: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 10px rgb(255, 255, 255));
+    }
+
+    .svg-container img.visible {
+      opacity: 1;
+      filter: drop-shadow(0 0 10px rgb(254, 254, 254)) 
+              drop-shadow(0 0 10px rgba(255, 255, 255, 0.231));
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .additional-words {
+      display: flex;
+      gap: 50px;
+      margin-top: 1px;
+      z-index: 1;
+    }
+    
+    .additional-word {
+      font-size: 5vw;
+      color: #fff;
+      cursor: pointer;
+      text-shadow: 0 0 10px #E0218A, 
+                   0 0 20px #E0218A;
+      transition: all 0.3s ease;
+    }
+    
+    .additional-word:active {
+      transform: scale(1.5);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hintergrund-Text">
+  <div class="name-container">
+    <div class="row row-1">
+      <span>S</span><span>H</span><span>I</span><span>R</span><span>I</span><span>N</span>
+    </div>
+    <div class="row row-2">
+      <span>D</span><span>A</span><span>V</span><span>I</span><span>D</span>
+    </div>
+    <div class="row row-3">
+      <span>S</span><span>H</span><span>I</span>
+    </div>
+    <div class="row row-3">
+      <span>R</span><span>I</span><span>N</span>
+    </div>
+    <div class="row row-4">
+      <span>D</span><span>A</span>
+    </div>
+    <div class="row row-4">
+      <span>V</span><span>I</span><span>D</span>
+    </div>
+  </div>
+</div>
+
+<div id="word">BAUCH</div>
+
+<!-- Neue permanente Wörter hinzufügen -->
+<div class="additional-words">
+  <div class="additional-word" id="uh">UH</div>
+  <div class="additional-word" id="yeah">YEAH</div>
+</div>
+
+<div class="action-wrapper">
+  <!-- [Rest Ihres bestehenden Codes] -->
+</div>
+
+<div class="action-wrapper">
+  <div class="svg-container">
+    <img id="svg1" src="Element 80.svg" class="visible" alt="SVG 1">
+    <img id="svg2" src="Element 90.svg" alt="SVG 2">
+  </div>
+  <div class="text-container">
+    <div id="pushIt">PUSH IT</div>
+    <div id="counter">0</div>
+  </div>
+</div>
+
+<!-- Audio-Elemente -->
+<audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
+<audio id="Beine" src="Beine.mp3" preload="auto"></audio>
+<audio id="Po" src="Po.mp3" preload="auto"></audio>
+<audio id="Uh" src="Uh.mp3" preload="auto"></audio>
+<audio id="Yeah" src="Yeah.mp3" preload="auto"></audio>
+<audio id="PushSound" src="pushit.mp3" preload="auto"></audio>
+
+<script>
+  const words = ["BAUCH", "BEINE", "PO", "UH", "YEAH"];
+  const sounds = [
+    document.getElementById("Bauch"),
+    document.getElementById("Beine"),
+    document.getElementById("Po"),
+    document.getElementById("Uh"),
+    document.getElementById("Yeah")
+  ];
+  let index = 0;
+
+  const wordElement = document.getElementById("word");
+
+  wordElement.addEventListener("click", () => {
+    index = (index + 1) % words.length;
+
+    // Pop-Effekt
+    wordElement.classList.remove("pop");
+    void wordElement.offsetWidth;
+    wordElement.classList.add("pop");
+
+    // Wortwechsel mit Fade
+    wordElement.style.opacity = 0;
+    setTimeout(() => {
+      wordElement.textContent = words[index];
+      wordElement.style.opacity = 1;
+    }, 150);
+
+    // Sound abspielen
+    sounds[index].currentTime = 0;
+    sounds[index].play();
+  });
+
+  const pushIt = document.getElementById("pushIt");
+  const pushSound = document.getElementById("PushSound");
+  const counterElement = document.getElementById("counter");
+  let counter = 0;
+
+  const svg1 = document.getElementById("svg1");
+  const svg2 = document.getElementById("svg2");
+  let svgToggle = false;
+
+  pushIt.addEventListener("click", () => {
+    counter++;
+    counterElement.textContent = counter;
+    pushSound.currentTime = 0;
+    pushSound.play();
+
+    // Pop-Effekt für Counter
+    counterElement.classList.remove("counter-pop");
+    void counterElement.offsetWidth;
+    counterElement.classList.add("counter-pop");
+
+    // Pop-Effekt für PUSH IT
+    pushIt.classList.remove("pop");
+    void pushIt.offsetWidth;
+    pushIt.classList.add("pop");
+
+    svgToggle = !svgToggle;
+    if (svgToggle) {
+      svg1.classList.remove("visible");
+      svg2.classList.add("visible");
+    } else {
+      svg2.classList.remove("visible");
+      svg1.classList.add("visible");
+    }
+    const uhElement = document.getElementById("uh");
+  const yeahElement = document.getElementById("yeah");
+  
+  uhElement.addEventListener("click", () => {
+    uhElement.style.transform = 'scale(1.5)';
+    uhElement.style.opacity = '0.7';
+    
+    setTimeout(() => {
+      uhElement.style.transform = 'scale(1)';
+      uhElement.style.opacity = '1';
+    }, 300);
+    
+    document.getElementById("Uh").currentTime = 0;
+    document.getElementById("Uh").play();
+  });
+  
+  yeahElement.addEventListener("click", () => {
+    yeahElement.style.transform = 'scale(1.5)';
+    yeahElement.style.opacity = '0.7';
+    
+    setTimeout(() => {
+      yeahElement.style.transform = 'scale(1)';
+      yeahElement.style.opacity = '1';
+    }, 300);
+    
+    document.getElementById("Yeah").currentTime = 0;
+    document.getElementById("Yeah").play();
+  });
+  });
+</script>
+
+</body>
+</html>
