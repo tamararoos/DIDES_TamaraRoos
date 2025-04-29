@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Shirin David</title>
+  <style>
+    body {
+      background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Impact, sans-serif;
+      overflow: hidden;
+    }
+
+    #word {
+      font-size: 30vw;
+      color: white;
+      cursor: pointer;
+      text-shadow: 0 0 10px #E0218A;
+      position: relative;
+      z-index: 10;
+      transition: all 0.1s;
+    }
+
+    /* Pulsierender Effekt */
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #E0218A; }
+      50% { text-shadow: 0 0 30px #E0218A; }
+    }
+    
+    #word.pulse {
+      animation: pulse 2s infinite;
+    }
+
+    /* Pop-Effekt beim Klick */
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(2); }
+      100% { transform: scale(1); }
+    }
+    
+    #word.pop {
+      animation: pop 0.5s;
+    }
+
+    #pushIt {
+      font-size: 10vw;
+      color: #E0218A;
+      margin-top: 20px;
+      cursor: pointer;
+      text-shadow: 0 0 5px white;
+    }
+    
+    #counter {
+      font-size: 8vw;
+      color: white;
+      margin-top: 10px;
+      text-shadow: 0 0 5px #E0218A;
+    }
+  </style>
+</head>
+<body>
+
+<div id="word" class="pulse">BAUCH</div>
+<div id="pushIt">PUSH IT</div>
+<div id="counter">0</div>
+
+<audio id="sound1" src="Bauch.mp3" preload></audio>
+<audio id="sound2" src="Beine.mp3" preload></audio>
+<audio id="sound3" src="Po.mp3" preload></audio>
+<audio id="pushSound" src="pushit.mp3" preload></audio>
+
+<script>
+  const words = ["BAUCH", "BEINE", "PO"];
+  const sounds = ["sound1", "sound2", "sound3"];
+  let currentIndex = 0;
+  let counter = 0;
+
+  const wordElement = document.getElementById("word");
+  const pushItElement = document.getElementById("pushIt");
+  const counterElement = document.getElementById("counter");
+
+  // Wortwechsel mit Pop-Effekt
+  wordElement.addEventListener('click', function() {
+    // Pop-Effekt auslösen
+    this.classList.remove('pop');
+    void this.offsetWidth; // Reflow erzwingen
+    this.classList.add('pop');
+    
+    // Nächstes Wort anzeigen
+    currentIndex = (currentIndex + 1) % words.length;
+    this.textContent = words[currentIndex];
+    
+    // Sound abspielen
+    document.getElementById(sounds[currentIndex]).currentTime = 0;
+    document.getElementById(sounds[currentIndex]).play();
+  });
+
+  // PUSH IT Funktion
+  pushItElement.addEventListener('click', function() {
+    counter++;
+    counterElement.textContent = counter;
+    
+    // Sound abspielen
+    document.getElementById('pushSound').currentTime = 0;
+    document.getElementById('pushSound').play();
+    
+    // Pop-Effekt für Button
+    this.classList.remove('pop');
+    void this.offsetWidth;
+    this.classList.add('pop');
+  });
+</script>
+
+</body>
+</html>

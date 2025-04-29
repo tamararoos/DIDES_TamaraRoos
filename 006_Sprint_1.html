@@ -10,6 +10,7 @@
       background: #000;
       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
@@ -41,10 +42,9 @@
       justify-content: center;
     }
 
-    /* Standard: 2 Zeilen */
     .row-1 span,
     .row-2 span {
-      font-size:35vw;
+      font-size: 35vw;
       line-height: 50vh;
     }
 
@@ -52,7 +52,6 @@
     .row-2 { display: flex; }
     .row-3, .row-4 { display: none; }
 
-    /* Ab 800px und kleiner: 4 Zeilen */
     @media (max-width: 800px) {
       .row-1, .row-2 { display: none;}
       .row-3, .row-4 { display: flex; }
@@ -77,6 +76,53 @@
 
     .pop {
       animation: pop 0.3s ease;
+    }
+
+    /* Glow für Push It */
+    @keyframes pulseGlow {
+      0% {
+        text-shadow:
+          0 0 5px #ffffff,
+          0 0 10px #ffbef2,
+          0 0 20px #ffffff;
+      }
+      50% {
+        text-shadow:
+          0 0 15px #ffffff,
+          0 0 30px #ff00ff,
+          0 0 45px #ffffff;
+      }
+      100% {
+        text-shadow:
+          0 0 5px #fffcfe,
+          0 0 10px #E0218A,
+          0 0 20px #ffffff;
+      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    #pushIt {
+      margin-top: 30px;
+      font-size: 10vw;
+      color: #E0218A;
+      cursor: pointer;
+      user-select: none;
+      animation: pulseGlow 2s infinite;
+      z-index: 1;
+      position: relative;
+    }
+
+    #counter {
+      margin-top: 10px;
+      font-size: 10vw;
+      color: rgb(255, 255, 255);
+      z-index: 2;  
+      text-shadow:
+          0 0 5px #E0218A,
+          0 0 10px #E0218A,
+          0 0 20px #ff00ff;
     }
   </style>
 </head>
@@ -109,11 +155,14 @@
 </div>
 
 <div id="word">BAUCH</div>
+<div id="pushIt">PUSH IT</div>
+<div id="counter">0</div>
 
 <!-- Audio -->
 <audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
 <audio id="Beine" src="Beine.mp3" preload="auto"></audio>
 <audio id="Po" src="Po.mp3" preload="auto"></audio>
+<audio id="PushSound" src="pushit.mp3" preload="auto"></audio>
 
 <script>
   const words = ["BAUCH", "BEINE", "PO"];
@@ -130,8 +179,8 @@
     index = (index + 1) % words.length;
 
     // Animation starten
-    wordElement.classList.remove("pop"); // reset, falls Animation noch läuft
-    void wordElement.offsetWidth; // Browser zwingt ein Reflow, damit die Animation neu startet
+    wordElement.classList.remove("pop");
+    void wordElement.offsetWidth;
     wordElement.classList.add("pop");
 
     wordElement.style.opacity = 0;
@@ -142,6 +191,19 @@
 
     sounds[index].currentTime = 0;
     sounds[index].play();
+  });
+
+  // PUSH IT Logik
+  const pushIt = document.getElementById("pushIt");
+  const pushSound = document.getElementById("PushSound");
+  const counterElement = document.getElementById("counter");
+  let counter = 0;
+
+  pushIt.addEventListener("click", () => {
+    counter++;
+    counterElement.textContent = counter;
+    pushSound.currentTime = 0;
+    pushSound.play();
   });
 </script>
 

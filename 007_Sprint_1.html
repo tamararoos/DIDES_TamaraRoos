@@ -71,7 +71,7 @@
 
     #word:active {
       transform: scale(3);
-      opacity: 0.2;
+      opacity: 0.5;
     }
 
     @keyframes pop {
@@ -91,10 +91,10 @@
       }
       50% {
 
-        text-shadow: 0 0 20px #f9a1d7, 0 0 30px #f9a1d7, 0 0 40px #f9a1d7;
+        text-shadow: 0 0 15px #E0218A, 0 0 30px #ff6ec7, 0 0 45px #E0218A;
       }
       100% {
-
+        font-size: 20vvw;
         text-shadow: 0 0 5px #E0218A, 0 0 10px #ff6ec7, 0 0 20px #E0218A;
       }
 
@@ -121,7 +121,7 @@
         text-shadow: 0 0 5px #ffffff, 0 0 10px #ffbef2, 0 0 20px #ffffff;
       }
       0% { transform: scale(1); }
-      50% { transform: scale(1.5); }
+      50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
 
@@ -131,18 +131,6 @@
       color: rgb(255, 255, 255);
       z-index: 2;
       text-shadow: 0 0 5px #000000, 0 0 10px #E0218A, 0 0 20px #000000;
-      transform: scale(1);
-      transition: transform 0.3s ease;
-    }
-
-    .counter-pop {
-      animation: counterPop 0.5s ease;
-    }
-
-    @keyframes counterPop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.5); }
-      100% { transform: scale(1); }
     }
 
     .action-wrapper {
@@ -165,20 +153,17 @@
     }
 
     .svg-container img {
-  position: absolute;
-  max-height: 100%;
-  max-width: unset;
-  bottom: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease, filter 0.3s ease;
-  filter: drop-shadow(0 0 10px rgb(255, 255, 255));
-}
+      position: absolute;
+      max-height: 100%;
+      max-width: unset;
+      bottom: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-.svg-container img.visible {
-  opacity: 1;
-  filter: drop-shadow(0 0 10px rgb(254, 254, 254)) 
-          drop-shadow(0 0 10px rgba(255, 255, 255, 0.231));
-}
+    .svg-container img.visible {
+      opacity: 1;
+    }
 
     .text-container {
       display: flex;
@@ -244,8 +229,9 @@
   wordElement.addEventListener("click", () => {
     index = (index + 1) % words.length;
 
+    // Pop-Effekt mit größerer Skalierung
     wordElement.classList.remove("pop");
-    void wordElement.offsetWidth;
+    void wordElement.offsetWidth; // Trigger Reflow
     wordElement.classList.add("pop");
 
     wordElement.style.opacity = 0;
@@ -273,12 +259,6 @@
     pushSound.currentTime = 0;
     pushSound.play();
 
-    // Pop-Effekt für Counter
-    counterElement.classList.remove("counter-pop");
-    void counterElement.offsetWidth;
-    counterElement.classList.add("counter-pop");
-
-    // Pop-Effekt für PUSH IT
     pushIt.classList.remove("pop");
     void pushIt.offsetWidth;
     pushIt.classList.add("pop");
