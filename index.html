@@ -357,6 +357,10 @@
   // Wörter erstellen
   createFloatingWord('BODY', 'Body');
   createFloatingWord('YEAH', 'Yeah');
+
+  document.getElementById('Yeah').addEventListener('error', function(e) {
+  console.error('Fehler beim Laden des Yeah-Sounds:', e);
+});
 </script>
 </body>
 </html>
