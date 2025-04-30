@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shirin David</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hintergrund-Text">
+  <div class="name-container">
+    <div class="row row-1">
+      <span>S</span><span>H</span><span>I</span><span>R</span><span>I</span><span>N</span>
+    </div>
+    <div class="row row-2">
+      <span>D</span><span>A</span><span>V</span><span>I</span><span>D</span>
+    </div>
+    <div class="row row-3">
+      <span>S</span><span>H</span><span>I</span>
+    </div>
+    <div class="row row-3">
+      <span>R</span><span>I</span><span>N</span>
+    </div>
+    <div class="row row-4">
+      <span>D</span><span>A</span>
+    </div>
+    <div class="row row-4">
+      <span>V</span><span>I</span><span>D</span>
+    </div>
+  </div>
+</div>
+
+<div id="word">BAUCH</div>
+
+<div class="action-wrapper">
+  <div class="svg-container">
+    <img id="svg1" src="Element 80.svg" class="visible" alt="SVG 1">
+    <img id="svg2" src="Element 90.svg" alt="SVG 2">
+  </div>
+  <div class="text-container">
+    <div id="pushIt">PUSH IT</div>
+    <div id="counter">0</div>
+  </div>
+</div>
+
+<audio id="Bauch" src="Bauch.mp3" preload="auto"></audio>
+<audio id="Beine" src="Beine.mp3" preload="auto"></audio>
+<audio id="Po" src="Po.mp3" preload="auto"></audio>
+<audio id="Body" src="Body.mp3" preload="auto"></audio>
+<audio id="Yeah" src="start.mp3" preload="auto"></audio>
+<audio id="PushSound" src="pushit.mp3" preload="auto"></audio>
+
+<script>
+  const words = ["BAUCH", "BEINE", "PO"];
+  const sounds = [
+    document.getElementById("Bauch"),
+    document.getElementById("Beine"),
+    document.getElementById("Po")
+  ];
+  let index = 0;
+
+  const wordElement = document.getElementById("word");
+
+  wordElement.addEventListener("click", () => {
+    index = (index + 1) % words.length;
+
+    wordElement.classList.remove("pop");
+    void wordElement.offsetWidth;
+    wordElement.classList.add("pop");
+
+    wordElement.style.opacity = 0;
+    setTimeout(() => {
+      wordElement.textContent = words[index];
+      wordElement.style.opacity = 1;
+    }, 150);
+
+    sounds[index].currentTime = 0;
+    sounds[index].play();
+  });
+
+  const pushIt = document.getElementById("pushIt");
+  const pushSound = document.getElementById("PushSound");
+  const counterElement = document.getElementById("counter");
+  let counter = 0;
+
+  const svg1 = document.getElementById("svg1");
+  const svg2 = document.getElementById("svg2");
+  let svgToggle = false;
+
+  pushIt.addEventListener("click", () => {
+    counter++;
+    counterElement.textContent = counter;
+    pushSound.currentTime = 0;
+    pushSound.play();
+
+    counterElement.classList.remove("counter-pop");
+    void counterElement.offsetWidth;
+    counterElement.classList.add("counter-pop");
+
+    pushIt.classList.remove("pop");
+    void pushIt.offsetWidth;
+    pushIt.classList.add("pop");
+
+    svgToggle = !svgToggle;
+    if (svgToggle) {
+      svg1.classList.remove("visible");
+      svg2.classList.add("visible");
+    } else {
+      svg2.classList.remove("visible");
+      svg1.classList.add("visible");
+    }
+  });
+
+  // Floating Words Funktion
+  function createFloatingWord(text, soundId) {
+    const word = document.createElement('div');
+    word.className = 'floating-word';
+    word.textContent = text;
+    document.body.appendChild(word);
+
+    // Startposition
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    
+    // Zufällige Bewegung
+    let xSpeed = (Math.random() - 0.5) * 7;
+    let ySpeed = (Math.random() - 0.5) * 7;
+
+    // Klick-Effekt
+    word.addEventListener('click', () => {
+      document.getElementById(soundId).currentTime = 0;
+      document.getElementById(soundId).play();
+      word.style.transform = 'scale(1.8)';
+      setTimeout(() => word.style.transform = 'scale(1)', 300);
+    });
+
+    // Animation
+    function animate() {
+      x += xSpeed;
+      y += ySpeed;
+
+      // Bildschirmbegrenzungen
+      if (x <= 0 || x >= window.innerWidth - word.offsetWidth) xSpeed *= -1;
+      if (y <= 0 || y >= window.innerHeight - word.offsetHeight) ySpeed *= -1;
+
+      word.style.left = x + 'px';
+      word.style.top = y + 'px';
+      
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+
+  // Wörter erstellen
+  createFloatingWord('BODY', 'Body');
+  createFloatingWord('YEAH', 'Yeah');
+
+  document.getElementById('Yeah').addEventListener('error', function(e) {
+  console.error('Fehler beim Laden des Yeah-Sounds:', e);
+});
+</script>
+</body>
+</html>
