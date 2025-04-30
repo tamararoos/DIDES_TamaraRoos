@@ -30,7 +30,7 @@ html, body {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 60vw;
+      font-size: 50vw;
       letter-spacing: 20px;
       color: #E0218A;
       text-shadow: 2px 2px 4px rgb(255, 255, 255);
@@ -46,7 +46,7 @@ html, body {
 
     .row-1 span,
     .row-2 span {
-      font-size: 35vw;
+      font-size: 30vw;
       line-height: 50vh;
     }
 
