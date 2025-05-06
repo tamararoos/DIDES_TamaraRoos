@@ -33,7 +33,7 @@ html, body {
       font-size: 50vw;
       letter-spacing: 20px;
       color: #E0218A;
-      text-shadow: 10px 10px 10px rgb(255, 255, 255);
+      text-shadow: 2px 2px 4px rgb(255, 255, 255);
       text-transform: uppercase;
       line-height: 25vh;
       width: 100%; /* Neu */
@@ -46,7 +46,7 @@ html, body {
 
     .row-1 span,
     .row-2 span {
-      font-size: 34vw;
+      font-size: 30vw;
       line-height: 50vh;
     }
 
@@ -165,12 +165,13 @@ html, body {
       bottom: 0;
       opacity: 0;
       transition: opacity 0.5s ease, filter 0.3s ease;
-      filter: drop-shadow(0 0 30px rgb(255, 255, 255));
+      filter: drop-shadow(0 0 10px rgb(255, 255, 255));
     }
 
     .svg-container img.visible {
       opacity: 1;
-
+      filter: drop-shadow(0 0 30px rgb(254, 254, 254)) 
+              drop-shadow(0 0 30px rgba(255, 255, 255, 0.231));
     }
 
     .text-container {
@@ -184,7 +185,7 @@ html, body {
       font-size: 15vw;
       color: #fff;
       cursor: pointer;
-      text-shadow: 0 0 10px rgb(224, 33, 138), 
+      text-shadow: 0 0 10px #E0218A, 
                    0 0 20px #E0218A;
       z-index: 1;
       user-select: none;
@@ -200,8 +201,4 @@ html, body {
       .row-1, .row-2 { display: none;  }
       .row-3, .row-4 { display: flex;}
 
-
-        }
-      
-
-    
+    }
